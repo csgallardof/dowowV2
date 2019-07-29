@@ -1,0 +1,116 @@
+
+##############################
+############ CRUD ############
+##############################
+
+Modelo + Migrations
+php artisan make:model Local -m
+
+Controler CRUD
+php artisan make:controller LocalController --resource
+
+##################################
+############ ELOQUENT ############
+##################################
+
+Crea tablas
+php artisan migrate
+
+Regresa un paso la bd
+
+php artisan migrate:rollback --step=1
+
+#######################################################
+############ Respetar Nombre Tabla Laravel ############
+#######################################################
+
+use SoftDeletes;
+protected $table = 'propuestas';
+
+protected $dates = [
+ "created_at",
+ "updated_at",
+ "deleted_at",
+];
+
+####################################################
+############ Compilar SCSS y Javascript ############
+####################################################
+
+# npm run dev
+# npm run watch
+
+#####################################
+############ Main layout ############
+#####################################
+
+resources\views\layouts
+
+##########################################
+############ Color a utilizar ############
+##########################################
+
+CSS:
+
+Fondo: mdl-color--white
+Fondo Azul: mdl-color--blue-600
+Letra: mdl-color-text--white
+
+##################################
+############ Logo ################
+##################################
+
+<img class="ub_dowow_logo_login" src="{{ url('images/logos/dowow.png') }}" width="20%" />
+
+##################################
+############ Lenguaje ############
+##################################
+
+resources\lang\es
+
+##################################
+############ SCSS ################
+##################################
+
+resources\assets\sass\custom\_custom1.scss
+
+#####################################
+############ SISTEMA ################
+#####################################
+
+https://github.com/jeremykenedy/laravel-material-design
+
+#####################################
+############## CLEAR ################
+#####################################
+
+Route::get('/clear-cache', function() {
+    //$exitCode = Artisan::call('cache:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+
+    return "Cleared!";
+
+});
+
+#####################################
+################ API ################
+#####################################
+
+Route::get('api/listadotramites', function(){
+  $input = Input::get('institucion');
+  $tramites = Tramite::where('id_institucion', $input);
+  return Response::json($tramites->get(['id','id_institucion','nombre_tramite']));
+  //return Tramite::all();
+  //dd($tramites);
+});
+
+Route::get('api/listadotramitesall', function(){
+  return Tramite::all();
+});
+
+Route::get('api/listadoinstituciones', function(){
+  return Institucion::all();
+});
